@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="author" content="Super Deng">
+
+
+
+<meta name="description" content="在node.js中入如果想要调用核心API须要通过require来调用 文件操作通过require来node.js的核心API’ fs ‘文件系统 const fs = require(&amp;#39;fs&amp;#39;) 文件读取fs核心模块中提供了一个fs.readFile方法，来读取指定目录下的文件 fs.readFile(path,[options],callback) path 读取的文件的路径">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2019/03/29/node.js中的文件操作/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="在node.js中入如果想要调用核心API须要通过require来调用 文件操作通过require来node.js的核心API’ fs ‘文件系统 const fs = require(&amp;#39;fs&amp;#39;) 文件读取fs核心模块中提供了一个fs.readFile方法，来读取指定目录下的文件 fs.readFile(path,[options],callback) path 读取的文件的路径">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-03-29T12:53:26.240Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="在node.js中入如果想要调用核心API须要通过require来调用 文件操作通过require来node.js的核心API’ fs ‘文件系统 const fs = require(&amp;#39;fs&amp;#39;) 文件读取fs核心模块中提供了一个fs.readFile方法，来读取指定目录下的文件 fs.readFile(path,[options],callback) path 读取的文件的路径">
+
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Hexo</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: 
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Super Deng</a></h1>
+        </hgroup>
+
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:123@123.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于前端</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Super Deng</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Super Deng</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:123@123.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我">
+</nav>
+      <div class="body-wrap"><article id="post-node.js中的文件操作" class="article article-type-post" itemscope="" itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/03/29/node.js中的文件操作/" class="article-date">
+      <time datetime="2019-03-29T01:05:40.844Z" itemprop="datePublished">2019-03-29</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p><code>在node.js中入如果想要调用核心API须要通过require来调用</code></p>
+<h3 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h3><p>通过require来node.js的核心API’ fs ‘文件系统</p>
+<p><code>const fs = require(&#39;fs&#39;)</code></p>
+<h4 id="文件读取"><a href="#文件读取" class="headerlink" title="文件读取"></a>文件读取</h4><p>fs核心模块中提供了一个fs.readFile方法，来读取指定目录下的文件</p>
+<p>fs.readFile(path,[options],callback)</p>
+<p>path 读取的文件的路径</p>
+<p>options 表示要以什么样的编码格式来读取文件，默认编码格式为 null ,一般都会改为utf-8</p>
+<p>callback  当文件读取完成，调用这个callback回调函数来处理读取的结果</p>
+<p>第一个参数是错误对象err ，如果err为null就证明读取成功了没有出错</p>
+<p>第二个参数是读取成功的结果data</p>
+<p>错误优先回调函数</p>
+<p>err.meeage 错误信息</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fs.readFile(<span class="string">'1.txt'</span>,<span class="string">'utf-8'</span>,(err,data) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span>(err) <span class="built_in">console</span>.log(<span class="string">'读取文件失败'</span>);<span class="comment">//如果错误对象位真就代表读取文件失败</span></span><br><span class="line">  <span class="built_in">console</span>.log(data);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>文件的操作是一个异步的过程</p>
+<p>fs提供了一个readFileSync方法来时文件读取能够同步</p>
+<p>var fs = fs.readFileSync(path,options)</p>
+<h4 id="文件写入"><a href="#文件写入" class="headerlink" title="文件写入"></a>文件写入</h4><p>fs.writeFile(‘path’,’data’,callback)</p>
+<p>第一个参数也是一个要写入的路径，如果当前路径没有对应的文件，则自己创建在写入</p>
+<p>第二个参数时要写入的数据</p>
+<p>第三个参数为写入数据后的结果</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fs.writeFile(<span class="string">'1.txt'</span>,<span class="string">'111'</span>,err =&gt; &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(err) <span class="keyword">return</span> <span class="built_in">console</span>.log(<span class="string">'写入文件失败'</span>)</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>每次写入都会覆盖，不会保留，所以要有文件追加</p>
+<h4 id="文件追加"><a href="#文件追加" class="headerlink" title="文件追加"></a>文件追加</h4><p>fs.appendFile(‘path’,’data’,callback)</p>
+<p>第二个参数为要追加的数据,其它的两个参数跟文件写入一致</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fs.appendFile(<span class="string">'1.txt'</span>,<span class="string">'\n2222'</span>,err =&gt; &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(err) <span class="keyword">return</span> <span class="built_in">console</span>.log(<span class="string">'文件按追加失败'</span>)</span><br><span class="line"></span><br><span class="line">&#125; )</span><br></pre></td></tr></table></figure>
+<h4 id="文件复制"><a href="#文件复制" class="headerlink" title="文件复制"></a>文件复制</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">方法<span class="number">1</span>:</span><br><span class="line">fs.readFile(<span class="string">'1/txt'</span>,<span class="string">'utf-8'</span>,(err,data) =&gt; &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(err) <span class="keyword">return</span> <span class="built_in">console</span>.log(<span class="string">'文件读取出差错了'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(data)</span><br><span class="line"></span><br><span class="line">    fs.writeFile(<span class="string">'2.txt'</span>,data,err =&gt; &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(err) <span class="keyword">return</span> <span class="built_in">console</span>.log(<span class="string">'文件写入失败'</span>)</span><br><span class="line"></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'文件按复制成功'</span>)</span><br><span class="line"></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">&#125;)</span><br><span class="line">方法<span class="number">2</span>:</span><br><span class="line">fs.copyFile(<span class="string">'.1txt'</span>,<span class="string">'6.txt'</span>,err =&gt; &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(err) <span class="keyword">return</span> <span class="built_in">console</span>.log(<span class="string">'复制出错了'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'文件复制成功了'</span>)</span><br><span class="line"></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//第一个参数为被复制的文件名，第二个参数为要复制到的文件按名</span></span><br></pre></td></tr></table></figure>
+<h4 id="读取文件信息"><a href="#读取文件信息" class="headerlink" title="读取文件信息"></a>读取文件信息</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fs.stat(<span class="string">'1.txt'</span>,(err,stats) =&gt; &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(stats);<span class="comment">//获取到文件的大小、创建实际按等信息</span></span><br><span class="line">  <span class="comment">//获取到的文件大小的当为为字节B,一字节为8位(bit)</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h4 id="读取文件夹"><a href="#读取文件夹" class="headerlink" title="读取文件夹"></a>读取文件夹</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">fs.readdir(<span class="string">'文件加路径'</span>,(err,files) =&gt; &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(files)<span class="comment">//获取到当前文件夹下的所有文件以一个数组的形式存放</span></span><br><span class="line">   	</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>​    在对文件进行操作的是后都会涉及到路径的问题，如果不是在当前终端路径目录下执行，会导致报错，因为如果在在其他的位置的终端中执行会导致还没到文件所在路径的文件加就直接取在找文件，就会报错。如果使用绝对路径就 不会出现这样的情况</p>
+<p><strong>dirname //文件夹坐在文件的目录 和终端路径没有任何关系
+</strong>filename //文件地址</p>
+<h3 id="路径操作"><a href="#路径操作" class="headerlink" title="路径操作"></a>路径操作</h3><p>path也是node.js中的核心API，通过require来调用</p>
+<p>const path = require(‘path’)</p>
+<p>path中的join方法能够更好的将该路径片段进行拼接</p>
+<p>path.join(‘/b’,’\a’)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const fs = require(&apos;fs&apos;);</span><br><span class="line">const path = require(&apos;path&apos;);</span><br><span class="line">fs.readFile(path.join(__dirname,&apos;./3.txt&apos;),&apos;utf-8&apos;,function(err,data) &#123;</span><br><span class="line">    if(err) return console.log(&apos;文件读取错误&apos; + err.message);</span><br><span class="line">    console.log(&apos;读取内容成功内容为:&apos; + data);</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2019/03/29/node.js中的文件操作/"></a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Super Deng</a></p>
+        <p><span>发布时间:</span>2019-03-29, 09:05:40</p>
+        <p><span>最后更新:</span>2019-03-29, 20:53:26</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2019/03/29/node.js中的文件操作/" title="">http://yoursite.com/2019/03/29/node.js中的文件操作/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2019/03/29/node.js中的文件操作/　　作者: Super Deng" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2019/04/03/跨域/">
+                    跨域
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2019/03/29/node-js/">
+                    node.js
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#文件操作"><span class="toc-number">1.</span> <span class="toc-text">文件操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#文件读取"><span class="toc-number">1.1.</span> <span class="toc-text">文件读取</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#文件写入"><span class="toc-number">1.2.</span> <span class="toc-text">文件写入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#文件追加"><span class="toc-number">1.3.</span> <span class="toc-text">文件追加</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#文件复制"><span class="toc-number">1.4.</span> <span class="toc-text">文件复制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#读取文件信息"><span class="toc-number">1.5.</span> <span class="toc-text">读取文件信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#读取文件夹"><span class="toc-number">1.6.</span> <span class="toc-text">读取文件夹</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#路径操作"><span class="toc-number">2.</span> <span class="toc-text">路径操作</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录" title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"　| Hexo　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2019/04/03/跨域/" title="上一篇: 跨域">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2019/03/29/node-js/" title="下一篇: node.js">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/04/03/跨域/">跨域</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/29/node.js中的文件操作/">node.js中的文件操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/29/node-js/">node.js</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/24/Typora For Markdown 语法/">Typora For Markdown 语法</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/23/JavaScript/">JavaScript</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/03/CSS3/">CSS3</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/28/HTML5/">HTML5</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/18/Ajax学习第三天/">Ajax学习第三天</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/16/AJAX学习第二天/">AJAX学习第二天</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/15/AJAX学习第一天/">AJAX学习（第一天）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/12/MySQL的学习/">MySQL的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/07/如何使用hexo-GitHub搭建个人博客/">如何使用hexo+GitHub搭建个人博客</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2019 Super Deng
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style="display:none">
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style="display:none">
+                        <span id="page-visit" title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

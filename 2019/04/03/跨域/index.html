@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="author" content="Super Deng">
+
+
+
+<meta name="description" content="实现跨域页面中有几个可以允许跨域资源请求的标签，分别为a链接的herf、img的src、link的src跟script中的src  浏览器的同源限制。同源要域名、协议、端口都相同，如果是协议跟端口照成的不同源，前端是无法解决的 跨域并不是请求发不出去，请求可以发出去吗，服务器端能够接受到请求并返回数据，只是返回回来的时候被浏览器拦截了 所有的跨域必须要经过信息提供方的允许，如果未经允许被激活是浏览">
+<meta property="og:type" content="article">
+<meta property="og:title" content="跨域">
+<meta property="og:url" content="http://yoursite.com/2019/04/03/跨域/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="实现跨域页面中有几个可以允许跨域资源请求的标签，分别为a链接的herf、img的src、link的src跟script中的src  浏览器的同源限制。同源要域名、协议、端口都相同，如果是协议跟端口照成的不同源，前端是无法解决的 跨域并不是请求发不出去，请求可以发出去吗，服务器端能够接受到请求并返回数据，只是返回回来的时候被浏览器拦截了 所有的跨域必须要经过信息提供方的允许，如果未经允许被激活是浏览">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2019/04/03/跨域/D:/Hexo/blog/source/_posts/跨域/ajaxkuyu.jpg">
+<meta property="og:updated_time" content="2019-04-03T13:29:05.558Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="跨域">
+<meta name="twitter:description" content="实现跨域页面中有几个可以允许跨域资源请求的标签，分别为a链接的herf、img的src、link的src跟script中的src  浏览器的同源限制。同源要域名、协议、端口都相同，如果是协议跟端口照成的不同源，前端是无法解决的 跨域并不是请求发不出去，请求可以发出去吗，服务器端能够接受到请求并返回数据，只是返回回来的时候被浏览器拦截了 所有的跨域必须要经过信息提供方的允许，如果未经允许被激活是浏览">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/03/跨域/D:/Hexo/blog/source/_posts/跨域/ajaxkuyu.jpg">
+
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>跨域 | Hexo</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: 
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Super Deng</a></h1>
+        </hgroup>
+
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:123@123.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于前端</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Super Deng</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Super Deng</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:123@123.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我">
+</nav>
+      <div class="body-wrap"><article id="post-跨域" class="article article-type-post" itemscope="" itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/04/03/跨域/" class="article-date">
+      <time datetime="2019-04-03T11:45:42.000Z" itemprop="datePublished">2019-04-03</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      跨域
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="实现跨域"><a href="#实现跨域" class="headerlink" title="实现跨域"></a>实现跨域</h3><p>页面中有几个可以允许跨域资源请求的标签，分别为a链接的herf、img的src、link的src跟script中的src</p>
+<ol>
+<li>浏览器的同源限制。同源要域名、协议、端口都相同，如果是协议跟端口照成的不同源，前端是无法解决的</li>
+<li>跨域并不是请求发不出去，请求可以发出去吗，服务器端能够接受到请求并返回数据，只是返回回来的时候被浏览器拦截了</li>
+<li>所有的跨域必须要经过信息提供方的允许，如果未经允许被激活是浏览器的同源策略出现了问题</li>
+</ol>
+<h3 id="实现跨域的方式"><a href="#实现跨域的方式" class="headerlink" title="实现跨域的方式"></a>实现跨域的方式</h3><h4 id="服务端对响应头经行设置"><a href="#服务端对响应头经行设置" class="headerlink" title="服务端对响应头经行设置"></a>服务端对响应头经行设置</h4><p>在node中的的设置如下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">app.all(<span class="string">'*'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line"> res.header(<span class="string">'Access-Control-Allow-Origin'</span>,<span class="string">'*'</span>);</span><br><span class="line"> next();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="通过jsonp的方式"><a href="#通过jsonp的方式" class="headerlink" title="通过jsonp的方式"></a>通过jsonp的方式</h4><p>jsonp的实现原理如下</p>
+<p>​    利用了script标签的天然跨域特性，在发送请求的时候传递了一个函数给后台，后台最后以参数调用的方式返回数据，前端在另外的script标签内创建相同的函数，来接收后台返回过来的参数</p>
+<p>​    jsonp实现跨域请求和Ajax请求的本质不一样，<code>jsonp是通过script来发送跨域请求的</code>请求方式是GET请求，但是<code>Ajax是通过XMLHttpRequest实现请求的</code>，并可以设置请求的方式</p>
+<h4 id="原生的请求过程"><a href="#原生的请求过程" class="headerlink" title="原生的请求过程"></a>原生的请求过程</h4><p>​    须要手动创建script标签，然后设置src属性，拼接地址和一个callback（函数名称）。发起请求后，通过在另外一个script标签中设声明一个函数，名称与请求的函数名称相同，然后以形参来接收后端传过来的数据</p>
+<p>思考误区: 既然script标签能够解决跨域问题获取数据，那么为什么后端不能直接给前端返回数据，而是一个所谓的调用？</p>
+<p>​    script标签确实能够解决跨域并且获取数据，但是在前端并没有办法接收返回的数据。如果返回的是一个调用，那么只需要在另外一对script标签中，声明一个同名的函数体进行接收就可以了，后续的处理也是在函数内部经行的，也就是整个过程没有异步对象参与。</p>
+<p>json_web.html</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">callback</span> (<span class="params">data</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(data)</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"http://127.0.0.1:8877/jsonp?cb=callback1"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    // jsonp就是前端利用src不存在同源限制 向服务器发送请求 服务器返回是一个函数的调用 同时传递一个参数</span><br></pre></td></tr></table></figure>
+<p>jsonp_server.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>)</span><br><span class="line"><span class="keyword">const</span> app = express()</span><br><span class="line">app.get(<span class="string">'/jsonp'</span>, (req, res) =&gt; &#123;</span><br><span class="line">    <span class="comment">// 获取前端传递过来的回调函数名字</span></span><br><span class="line">    <span class="keyword">var</span> fn = req.query.cb</span><br><span class="line">    <span class="comment">// jsonp接口返回的是一个函数的调用</span></span><br><span class="line">    <span class="keyword">var</span> obj = &#123;<span class="attr">name</span>: <span class="string">'zhangsan'</span>, <span class="attr">age</span>: <span class="number">18</span>&#125;</span><br><span class="line">    <span class="comment">// res.send(`callback(99999)`)</span></span><br><span class="line">    res.send(<span class="string">`<span class="subst">$&#123;fn&#125;</span>(<span class="subst">$&#123;<span class="built_in">JSON</span>.stringify(obj)&#125;</span>)`</span>)</span><br><span class="line">&#125;)</span><br><span class="line">app.listen(<span class="number">8877</span>, () =&gt;&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`http://127.0.0.1:8877 启动了`</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>jsonp为什么只能发送get请求</p>
+<p>​    因为发起请求的方式是script标签，而不是异步对象，所以选择不了请求方式，标签默认就是get请求</p>
+<p>Ajax中的jsonp</p>
+<p><img src="/2019/04/03/跨域/D:/Hexo\blog\source\_posts\跨域\ajaxkuyu.jpg" alt="![img](file:///D:/Hexo/blog/source/_posts/%E8%B7%A8%E5%9F%9F/ajaxkuyu.jpg?lastModify=1554291958)ajaxkuyu"></p>
+<h4 id="通过cors的方式"><a href="#通过cors的方式" class="headerlink" title="通过cors的方式"></a>通过cors的方式</h4><p>cors的中文意思是<code>跨域资源共享</code>，须要在服务器端经行<code>cors</code>配置</p>
+<ul>
+<li>cors发送的是正真的Ajax请求</li>
+<li>cors支持Ajax跨域，如果要启用CORS跨域资源共享，关键在于服务器，只要服务器支持CORS跨域资源共享，则浏览器肯定能够正常访问这种CORS接口；而且用户在发送Ajax的时候，就向发送普通Ajax一样</li>
+<li>对node来说，如果想要开启CORS跨域通信，只需要安装<code>cors</code>模块即可</li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2019/04/03/跨域/">跨域</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Super Deng</a></p>
+        <p><span>发布时间:</span>2019-04-03, 19:45:42</p>
+        <p><span>最后更新:</span>2019-04-03, 21:29:05</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2019/04/03/跨域/" title="跨域">http://yoursite.com/2019/04/03/跨域/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2019/04/03/跨域/　　作者: Super Deng" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2019/03/29/node.js中的文件操作/">
+                    
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#实现跨域"><span class="toc-number">1.</span> <span class="toc-text">实现跨域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现跨域的方式"><span class="toc-number">2.</span> <span class="toc-text">实现跨域的方式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#服务端对响应头经行设置"><span class="toc-number">2.1.</span> <span class="toc-text">服务端对响应头经行设置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#通过jsonp的方式"><span class="toc-number">2.2.</span> <span class="toc-text">通过jsonp的方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#原生的请求过程"><span class="toc-number">2.3.</span> <span class="toc-text">原生的请求过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#通过cors的方式"><span class="toc-number">2.4.</span> <span class="toc-text">通过cors的方式</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录" title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"跨域　| Hexo　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2019/03/29/node.js中的文件操作/" title="下一篇: ">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/04/03/跨域/">跨域</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/29/node.js中的文件操作/">node.js中的文件操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/29/node-js/">node.js</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/24/Typora For Markdown 语法/">Typora For Markdown 语法</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/23/JavaScript/">JavaScript</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/03/CSS3/">CSS3</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/28/HTML5/">HTML5</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/18/Ajax学习第三天/">Ajax学习第三天</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/16/AJAX学习第二天/">AJAX学习第二天</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/15/AJAX学习第一天/">AJAX学习（第一天）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/12/MySQL的学习/">MySQL的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/07/如何使用hexo-GitHub搭建个人博客/">如何使用hexo+GitHub搭建个人博客</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2019 Super Deng
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style="display:none">
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style="display:none">
+                        <span id="page-visit" title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
